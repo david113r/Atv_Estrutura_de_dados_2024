@@ -1,0 +1,198 @@
+#include<stdio.h>
+#include<stdlib.h>
+/*Uma loja precisa controlar a folha de pagamento de seus funcionários.
+Os atributos de um funcionário são nome, cargo, salário base, benefícios e descontos.
+Criar uma struct para a loja e cadastrar uma lista de no máximo 10 funcionários com os campos
+acima e depois mostre os dados de cada um deles, com o salário liquido de cada um. O cálculo
+do salário líquido é: salário base + benefícios – descontos.
+Criar operações também para exibir a média salarial da loja e exibir quem recebe o maior
+salário.
+*/
+struct funcionario
+{
+    char nome[100];
+    char cargo[100];
+    float salariobase=0;
+    float beneficios=0;
+    float descontos=0;
+    float SalLiq=0;
+
+
+    void ler()
+    {
+
+        fflush(stdin);
+        printf("\nDigite o nome:");
+        scanf("%[^\n]",nome);
+        fflush(stdin);
+        printf("\nDigite o cargo:");
+        scanf("%[^\n]",cargo);
+        fflush(stdin);
+        printf("\nDigite o salario base:");
+        scanf("%f",&salariobase);
+
+        printf("\nDigite o beneficio:");
+        scanf("%f",&beneficios);
+
+        printf("\nDigite os descontos:");
+        scanf("%f",&descontos);
+
+
+        SalLiq=(salariobase+beneficios-descontos);
+
+
+    }
+
+
+    void imprimir()
+    {
+
+        printf("\nnome:%s  \ncargo:%s   \nsalario base:%.2f \nbeneficios:%.2f \ndescontos:%.2f \nSalario liquido:%.2f\n",nome, cargo, salariobase, beneficios,  descontos, SalLiq);
+
+    }
+
+
+
+
+
+};
+
+struct loja
+{
+
+    funcionario func[3];
+    float SalLiq=0;
+    int qtdfunc=0;
+
+    void lerFunc()
+    {
+
+        if(qtdfunc>=3)
+        {
+
+            printf("\nLista cheia");
+            return;
+        }
+
+        func[qtdfunc].ler();
+
+        qtdfunc++;
+    }
+
+    void imprimirmaior()
+    {
+        int maior;
+        int i;
+        float maiorSal=0;
+
+        if(qtdfunc==0)
+        {
+            printf("\nLista vazia");
+
+        }
+
+        for(i=0; i<qtdfunc; i++)
+        {
+            if(func[i].salariobase>maiorSal)
+            {
+                maiorSal=func[i].salariobase;
+                maior=i;
+
+            }
+
+
+        }
+        func[maior].imprimir();
+
+    }
+
+    void imprimirMedia()
+    {
+
+        float media=0;
+
+
+        for(int i=0; i<qtdfunc; i++)
+        {
+
+            media =func[i].salariobase+media;
+
+
+        }
+
+        if (qtdfunc > 0)
+        {
+            media = media / qtdfunc;
+        }
+
+
+        printf("\nA Media salarial:%.2f\n",media);
+
+
+
+    }
+
+
+    void imprimirFun()
+    {
+
+        if(qtdfunc==0)
+        {
+
+            printf("\nlista vazia!!");
+            return;
+        }
+
+        for(int i=0; i<qtdfunc; i++)
+        {
+
+            func[i].imprimir();
+
+        }
+
+
+    }
+
+};
+
+
+int main()
+{
+
+    int op;
+    loja loj;
+
+
+
+    do
+    {
+        printf("\n1. Ler funcionario\n");
+        printf("2. Imprimir Funcionarios\n");
+        printf("3. Imprimir maior\n");
+        printf("4. Media salarial\n");
+        printf("0. Sair\n");
+        scanf("%d",&op);
+        switch (op)
+        {
+        case 1:
+            loj.lerFunc();
+            break;
+        case 2:
+            loj.imprimirFun();
+            break;
+        case 3:
+            loj.imprimirmaior();
+            break;
+
+        case 4:
+            loj.imprimirMedia();
+            break;
+
+        }
+    }
+    while (op == 1 || op == 2 || op == 3 || op == 4);
+
+
+
+    return 0;
+}
