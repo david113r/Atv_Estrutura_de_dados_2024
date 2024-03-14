@@ -1,0 +1,150 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+/*Criar uma struct para armazenar um cliente,
+contendo os seguintes dados: nome, data de nascimento, idade e sexo.
+O sexo é apenas uma letra (M ou F) e a data de nascimento deve ser armazenada
+numa struct de data, com 3 inteiros (dia, mês e ano). A idade deve ser calculada quando
+a data de nascimento for lida, e não solicitada ao usuário. Guarde a data atual numa
+variável da struct de data e crie uma função para calcular a idade.
+
+Após isso, criar um menu com 2 opções: cadastrar cliente e listar clientes.
+Na primeira, um cliente deve ser lido e na segunda exibidos todos os clientes em ordem de cadastro.
+Trate para que seu aplicativo armazene no máximo 50 clientes ao mesmo tempo.
+
+
+*/
+
+
+struct data
+{
+
+    int idade=0;
+    int dia=0, mes=0, ano=0;
+    int diaatual=14, mesatual=3, anoatual=2024;
+
+    void lernascimento()
+    {
+
+        printf("\ndigite o dia de nascimento:");
+        scanf("%d",&dia);
+
+        printf("\ndigite o mes de nascimento:");
+        scanf("%d",&mes);
+
+        printf("\ndigite o ano de nascimento:");
+        scanf("%d",&ano);
+
+
+    }
+
+    int Calcularidade()
+    {
+
+        idade=anoatual-ano;
+
+        if((mesatual<mes) || (diaatual<dia && mesatual==mes))
+        {
+            idade--;
+
+        }
+
+        return idade;
+
+    }
+
+
+
+
+
+};
+
+
+
+
+struct cliente
+{
+
+    data dat;
+    char nome[50];
+    int idade=0;
+    char sexo;
+    int qtdcli=0;
+
+    void lerCliente()
+    {
+        fflush(stdin);
+        printf("\nDigite o nome:");
+        scanf("%[^\n]",nome);
+        fflush(stdin);
+        printf("\nDigite o sexo:");
+        scanf("%c",&sexo);
+        fflush(stdin);
+
+        dat.lernascimento();
+        idade=dat.Calcularidade();
+
+
+
+    }
+
+    void imprimir()
+    {
+
+        printf("\nNome: %s\nSexo: %c\nIdade: %d\n",nome, sexo, idade);
+
+
+
+    }
+
+
+
+
+
+};
+
+
+
+
+int main()
+{
+    cliente cli[50];
+    data dat;
+    int i=0;
+    int op;
+    int qtdcli=0;
+
+
+    do
+    {
+        printf("\n1. Ler funcionario\n");
+        printf("2. Imprimir Funcionarios\n");
+        printf("0. Sair\n");
+        scanf("%d",&op);
+        switch (op)
+        {
+        case 1:
+
+            cli[i++].lerCliente();
+            qtdcli++;
+            break;
+
+        case 2:
+            for(i=0; i<qtdcli; i++)
+            {
+                cli[i].imprimir();
+            }
+
+            break;
+
+
+        }
+    }
+    while (op == 1 || op == 2);
+
+
+
+    return 0;
+
+}
